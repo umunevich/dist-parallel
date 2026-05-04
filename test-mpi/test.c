@@ -61,7 +61,6 @@ int main(int argc, char *argv[]) {
 		for (Interval = MyID + 1; Interval <= NumIntervals; Interval += numprocs) {
 			IntrvlMidPoint = IntervalWidth * ((double)Interval - 0.5);
 			IntervalLength += (4.0 / (1.0 + IntrvlMidPoint * IntrvlMidPoint));
-            // printf("MyPI: %f\n", IntervalWidth * IntervalLength);
 
             //slowFunction();
 		}
