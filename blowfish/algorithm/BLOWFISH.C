@@ -99,7 +99,7 @@ void Blowfish_decipher(uint32_t *xl, uint32_t *xr)
 short InitializeBlowfish(char key[], short keybytes)
 {
    short          i, j, k, error;
-   uint32_t       data, datal, datar; // Змінено на uint32_t
+   uint32_t       data, datal, datar;
    size_t         numread;
 
    error = opensubkeyfile();

@@ -1,0 +1,33 @@
+[Project]: Parallel Execution via Message Passing Interface (MPI)
+[Course]: Computer Science / Parallel & Distributed Computing
+[Date]: May 2026
+
+--- 1. OVERVIEW OF THE EXPERIMENT ---
+The purpose of this test file is to validate the correctness of data 
+decomposition and reconstruction using collective MPI routines. Blowfish 
+operates on 64-bit blocks. If our chunking logic (handling zero-padding) 
+is flawless, the output file generated after parallel decryption will be 
+100% byte-identical to this text.
+
+--- 2. TECHNICAL SPECIFICATIONS ---
+* Cipher: Blowfish (Schneier, 1993)
+* Mode of Operation: Electronic Codebook (ECB)
+* Parallelization API: MPI (Message Passing Interface)
+* Key Management: Broadcasted via MPI_Bcast()
+* Data Flow: MPI_Scatter() -> Parallel Loop -> MPI_Gather()
+
+--- 3. LOREM IPSUM GENERATION FOR EXTENDED SIZE ---
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod 
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim 
+veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea 
+commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
+velit esse cillum dolore eu fugiat nulla pariatur. 
+
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
+officia deserunt mollit anim id est laborum.
+
+--- 4. CHARACTER MATRIX VERIFICATION ---
+Checking standard ascii boundaries and special formatting strings:
+!@#$%^&*()_+ `{}:"<>?| ~-=[]\;',./
+[Tab	Test] 	[Newline Test]
+0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ

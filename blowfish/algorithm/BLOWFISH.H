@@ -1,6 +1,6 @@
 #include <stdint.h>
 
-#define MAXKEYBYTES 56          /* 448 bits */
+#define MAXKEYBYTES 56
 
 #define little_endian 1         
 

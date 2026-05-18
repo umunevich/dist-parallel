@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
-#include <omp.h>
+#include <time.h>
 #include "../algorithm/BLOWFISH.C"
 #include "../utils/file_utils.c"
 
 int main(int argc, char** argv) {
     long actual_file_size = 0;
-    double start_time, end_time;
+    clock_t start_time, end_time;
 
     char* stats_filename = (argc > 1 && strcmp(argv[1], "none") != 0) ? argv[1] : NULL;
     const char* input_file = (argc > 2) ? argv[2] : "test-files/input.txt";
@@ -25,37 +25,31 @@ int main(int argc, char** argv) {
         fprintf(stderr, "Error: Failed to open input file '%s'!\n", input_file);
         return 1;
     }
-    printf("Successfully processed '%s'. Total blocks: %d\n", input_file, total_elements);
+    printf("Sequential: Processed '%s'. Total blocks: %d\n", input_file, total_elements);
 
-    int num_threads = omp_get_max_threads();
-    printf("Starting encryption/decryption with %d threads...\n", num_threads);
-    
-    start_time = omp_get_wtime();
+    start_time = clock();
 
-    #pragma omp parallel for
     for (int i = 0; i < total_elements; i++) {
         Blowfish_encipher(&data_l[i], &data_r[i]);
     }
 
-    #pragma omp parallel for
     for (int i = 0; i < total_elements; i++) {
         Blowfish_decipher(&data_l[i], &data_r[i]);
     }
 
-    end_time = omp_get_wtime();
-    double total_time = end_time - start_time;
-    printf("Finished in %f seconds.\n", total_time);
+    end_time = clock();
+    double total_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+    printf("Sequential finished in %f seconds.\n", total_time);
 
     if (unpack_and_write_file(decrypted_file, total_elements, data_l, data_r, actual_file_size) == 0) {
-        printf("Decrypted data successfully saved to '%s'\n", decrypted_file);
+        printf("Sequential: Decrypted data saved to '%s'\n", decrypted_file);
     }
 
     if (stats_filename) {
         FILE *f = fopen(stats_filename, "a");
         if (f) {
             char* data_size_label = (argc > 4) ? argv[4] : "unknown";
-            
-            fprintf(f, "%d,%f,%s\n", num_threads, total_time, data_size_label);
+            fprintf(f, "1,%f,%s\n", total_time, data_size_label);
             fclose(f);
         }
     }
