@@ -83,16 +83,3 @@ The experimental results lead to the following conclusions:
 1. **Scalability:** The algorithm scales remarkably well because block encryption is entirely independent (ECB mode).
 2. **Data Scale Impact:** Parallel efficiency increases significantly with larger input files (20MB vs 1MB), as the dense computational workload easily outweighs the overhead of initializing threads or processes.
 3. **OpenMP vs. MPI:** On a local multi-core machine, the OpenMP implementation consistently outperforms MPI in raw execution time due to the absence of data-buffering and message-passing overhead between separate processes.
-
----
-
-## Instructions to Reproduce Tests
-
-To clear past runtime frames, recompile binaries, run the full benchmark cycle, and regenerate this precise report matrix, execute:
-
-```bash
-make clean
-make run_bench_mpi
-make run_bench_omp
-make plots
-```

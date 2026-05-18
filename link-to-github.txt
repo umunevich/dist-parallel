@@ -1,0 +1,3 @@
+Звіт - https://github.com/umunevich/dist-parallel/blob/main/blowfish/REPORT.md
+
+Репозиторій - https://github.com/umunevich/dist-parallel.git
